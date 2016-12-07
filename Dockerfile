@@ -12,7 +12,7 @@ MAINTAINER Eddie Belter
 RUN yum install -y file which unzip
 
 # LDAP
-RUN yum install -y authconfig-gtk ibsss_nss_idmap.x86_64 nss-pam-ldapd openldap openldap-clients
+RUN yum install -y sssd-client
 
 # Install bcl2fastq
 RUN cd tmp/ && \
@@ -24,7 +24,7 @@ RUN cd tmp/ && \
 # Install longranger
 #  unfortunately, the expires param here makes the url invalid after a certain time.
 RUN cd opt/ && \
-	curl -ko longranger-2.1.2.tar.gz "https://s3-us-west-2.amazonaws.com/10x.downloads/longranger-2.1.2.tar.gz?AWSAccessKeyId=AKIAJAZONYDS6QUPQVBA&Expires=1481107767&Signature=7S4d4y6j3c71XR9cPzMNqpTDH5k%3D" && \
+	curl -ko longranger-2.1.2.tar.gz "https://s3-us-west-2.amazonaws.com/10x.downloads/longranger-2.1.2.tar.gz?AWSAccessKeyId=AKIAJAZONYDS6QUPQVBA&Expires=1481185366&Signature=WqjleMfbCnjlCblQ%2FHvg%2B2dEkEY%3D" && \
 	tar -xzf longranger-2.1.2.tar.gz && \
 	rm longranger-2.1.2.tar.gz
 
