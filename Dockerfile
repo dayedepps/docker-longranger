@@ -9,10 +9,11 @@ FROM centos:7
 MAINTAINER Eddie Belter
 
 # Install some utilities
-RUN yum install -y file which unzip
-
-# LDAP
-RUN yum install -y sssd-client
+RUN yum install -y \
+	file \
+	sssd-client \
+	which \
+	unzip
 
 # Install bcl2fastq
 RUN cd tmp/ && \
