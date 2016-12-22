@@ -34,7 +34,7 @@ RUN yum install -y \
 	git
 RUN mkdir /opt/bin/ && \
 	cd /tmp/ && \
-	git clone git@github.com:genome/docker-longranger && \
+	git clone https://github.com/genome/docker-longranger.git && \
 	cd docker-longranger && \
 	cp longranger /opt/bin && \
 	rm -rf /tmp/docker-longranger
