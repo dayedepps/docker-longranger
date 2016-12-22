@@ -25,9 +25,22 @@ RUN cd tmp/ && \
 # Install longranger
 #  unfortunately, the expires param here makes the url invalid after a certain time.
 RUN cd opt/ && \
-	curl -ko longranger-2.1.2.tar.gz "https://s3-us-west-2.amazonaws.com/10x.downloads/longranger-2.1.2.tar.gz?AWSAccessKeyId=AKIAJAZONYDS6QUPQVBA&Expires=1481185366&Signature=WqjleMfbCnjlCblQ%2FHvg%2B2dEkEY%3D" && \
+	curl -ko longranger-2.1.2.tar.gz "https://s3-us-west-2.amazonaws.com/10x.downloads/longranger-2.1.2.tar.gz?AWSAccessKeyId=AKIAJAZONYDS6QUPQVBA&Expires=1481712226&Signature=q3tgMw%2BcE7EBfs6FQfQS3LzCoDc%3D" && \
 	tar -xzf longranger-2.1.2.tar.gz && \
 	rm longranger-2.1.2.tar.gz
 
-# Add longranger to PATH
-ENV PATH "${PATH}:/opt/longranger-2.1.2"
+# Shell script for CMD to setup ENV
+RUN yum install -y \
+	git
+RUN mkdir /opt/bin/ && \
+	cd /tmp/ && \
+	git clone git@github.com:genome/docker-longranger && \
+	cd docker-longranger && \
+	cp longranger /opt/bin && \
+	rm -rf /tmp/docker-longranger
+
+COPY longranger /opt/bin/
+RUN chmod 777 /opt/bin/longranger
+
+# Entrypoint is the longranger wrapper scipt
+ENTRYPOINT ["/opt/bin/longranger"]
