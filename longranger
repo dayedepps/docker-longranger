@@ -1,0 +1,13 @@
+#!/bin/bash
+
+LONGRANGER_PATH=/opt/longranger-2.1.2
+if [[ ":${PATH}:" != *":${LONGRANGER_PATH}:"* ]]; then
+  PATH="${LONGRANGER_PATH}:${PATH}"
+  export PATH
+fi
+
+if [[ "$1" == *"bash" ]]; then
+    /bin/env bash
+else
+    longranger "$@"
+fi
