@@ -1,11 +1,18 @@
 #!/bin/bash
 
+# If not, add longranger to path
 LONGRANGER_PATH=/opt/longranger-2.1.2
 if [[ ":${PATH}:" != *":${LONGRANGER_PATH}:"* ]]; then
   PATH="${LONGRANGER_PATH}:${PATH}"
   export PATH
 fi
 
+# If not, Set timezone
+if [ ! -e "/etc/timezone" ] && [ -z "${TZ}" ]; then
+    export TZ="America/Chicago"
+fi
+
+# Allow running a bash session, otherwise pass everything to longranger
 if [[ "$1" == *"bash" ]]; then
     /bin/env bash
 else
