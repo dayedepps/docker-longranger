@@ -26,7 +26,7 @@ RUN cd /tmp/ && \
 # Install longranger
 #  unfortunately, the expires param here makes the url invalid after a certain time.
 RUN cd /opt/ && \
-	curl -ko longranger-2.1.2.tar.gz "https://s3-us-west-2.amazonaws.com/10x.downloads/longranger-2.1.2.tar.gz?AWSAccessKeyId=AKIAJAZONYDS6QUPQVBA&Expires=1482485969&Signature=V1tuIBSa30IrmSXtOtF80yFBL4A%3D" && \
+	curl -ko longranger-2.1.2.tar.gz "https://s3-us-west-2.amazonaws.com/10x.downloads/longranger-2.1.2.tar.gz?AWSAccessKeyId=AKIAJAZONYDS6QUPQVBA&Expires=1484736641&Signature=tt4k7ETFCiPC%2BQ8hGA%2FDll%2F6n3k%3D" && \
 	tar -xzf longranger-2.1.2.tar.gz && \
 	rm longranger-2.1.2.tar.gz
 
@@ -36,8 +36,11 @@ RUN mkdir /opt/bin/ && \
 	git clone https://github.com/genome/docker-longranger.git && \
 	cd docker-longranger && \
 	cp longranger /opt/bin && \
+	cp lsf.template /opt/longranger-2.1.2/martian-cs/2.1.1/jobmanagers && \
 	rm -rf /tmp/docker-longranger
 RUN chmod 777 /opt/bin/longranger
+RUN chmod 777 /opt/longranger-2.1.2/martian-cs/2.1.1/jobmanagers
+RUN chmod 666 /opt/longranger-2.1.2/martian-cs/2.1.1/jobmanagers/*.template
 
 # Entrypoint is the longranger wrapper scipt
 ENTRYPOINT ["/opt/bin/longranger"]
