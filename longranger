@@ -1,11 +1,7 @@
 #!/bin/bash
 
-# If not, add longranger to path
-LONGRANGER_PATH=/opt/longranger-2.1.2
-if [[ ":${PATH}:" != *":${LONGRANGER_PATH}:"* ]]; then
-  PATH="${LONGRANGER_PATH}:${PATH}"
-  export PATH
-fi
+# Source the longranger bash config
+. /opt/longranger-2.1.2/sourceme.bash
 
 # If not, Set timezone
 if [ ! -e "/etc/timezone" ] && [ -z "${TZ}" ]; then
