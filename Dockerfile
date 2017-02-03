@@ -24,11 +24,10 @@ RUN cd /tmp/ && \
 	rm bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm bcl2fastq2-v2.17.1.14-Linux-x86_64.zip
 	
 # Install longranger
-#  unfortunately, the expires param here makes the url invalid after a certain time.
 RUN cd /opt/ && \
-	curl -ko longranger-2.1.2.tar.gz "https://s3-us-west-2.amazonaws.com/10x.downloads/longranger-2.1.2.tar.gz?AWSAccessKeyId=AKIAJAZONYDS6QUPQVBA&Expires=1484736641&Signature=tt4k7ETFCiPC%2BQ8hGA%2FDll%2F6n3k%3D" && \
-	tar -xzf longranger-2.1.2.tar.gz && \
-	rm longranger-2.1.2.tar.gz
+	git clone https://github.com/genome-vendor/10Xgenomics-longranger.git --branch v2.1.2 --single-branch longranger-2.1.2/ && \
+	cd longranger-2.1.2/ && \
+	rm -rf .git
 
 # Shell script for CMD to setup ENV
 RUN mkdir /opt/bin/ && \
