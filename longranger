@@ -12,6 +12,9 @@ fi
 # Reset PATH
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
+# Add lsf bin to PATH
+export PATH=/opt/lsf9/9.1/linux2.6-glibc2.3-x86_64/bin:$PATH
+
 # Source the longranger bash config
 . "/opt/longranger-${LONGRANGER_VERSION}"/sourceme.bash
 
