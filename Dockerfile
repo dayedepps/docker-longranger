@@ -39,11 +39,14 @@ RUN mkdir /opt/bin/ && \
 	git clone https://github.com/genome/docker-longranger.git && \
 	cd docker-longranger && \
 	cp longranger /opt/bin && \
-	cp lsf.template /opt/longranger-2.1.2/martian-cs/2.1.1/jobmanagers && \
+	cp lsf.template /opt/longranger-2.1.3/martian-cs/2.1.2/jobmanagers && \
 	rm -rf /tmp/docker-longranger
 RUN chmod 777 /opt/bin/longranger
-RUN chmod 777 /opt/longranger-2.1.2/martian-cs/2.1.1/jobmanagers
-RUN chmod 666 /opt/longranger-2.1.2/martian-cs/2.1.1/jobmanagers/*.template
+RUN chmod 777 /opt/longranger-2.1.3/martian-cs/2.1.2/jobmanagers
+RUN chmod 666 /opt/longranger-2.1.3/martian-cs/2.1.2/jobmanagers/*.template
+
+# LONG RANGER VERSION
+ENV LONGRANGER_VERSION 2.1.3
 
 # Entrypoint is the longranger wrapper scipt
 ENTRYPOINT ["/opt/bin/longranger"]
