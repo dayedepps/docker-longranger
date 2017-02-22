@@ -3,6 +3,12 @@
 # Exit on any error
 set -e
 
+# Check LONGRANGER_VERSION
+if [ -z "${LONGRANGER_VERSION}" ]; then
+    echo "No LONGRANGER_VERSION set!"
+    exit
+fi
+
 # Source the longranger bash config
 . /opt/longranger-2.1.2/sourceme.bash
 
