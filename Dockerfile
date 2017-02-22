@@ -6,7 +6,7 @@
 FROM centos:7
 
 # File Author / Maintainer
-MAINTAINER Eddie Belter
+MAINTAINER Eddie Belter <ebelter@wustl.edu>
 
 # Install some utilities
 RUN yum install -y \
@@ -18,16 +18,20 @@ RUN yum install -y \
 
 # Install bcl2fastq
 RUN cd /tmp/ && \
-	curl -o bcl2fastq2-v2.17.1.14-Linux-x86_64.zip ftp://webdata2:webdata2@ussd-ftp.illumina.com/downloads/software/bcl2fastq/bcl2fastq2-v2.17.1.14-Linux-x86_64.zip && \
-	unzip bcl2fastq2-v2.17.1.14-Linux-x86_64.zip && \
+	git clone git://git/bcl2fastq.git --branch v2.17.1 --single-branch bcl2fastq && \
+	cd bcl2fastq/ && \
 	yum -y --nogpgcheck localinstall bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm && \
-	rm bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm bcl2fastq2-v2.17.1.14-Linux-x86_64.zip
-	
+	cd /tmp/ && \
+	rm -rf bcl2fastq/
+
 # Install longranger
-RUN cd /opt/ && \
-	git clone https://github.com/genome-vendor/10Xgenomics-longranger.git --branch v2.1.2 --single-branch longranger-2.1.2/ && \
-	cd longranger-2.1.2/ && \
-	rm -rf .git
+RUN cd /tmp/ && \
+	git clone git://git/10x-genomics-longranger --branch v2.1.3 --single-branch longranger && \
+	cd longranger && \
+	cp longranger-2.1.3.tar.gz /opt/ && \
+	cd /opt/ && \
+	tar zxf longranger-2.1.3.tar.gz && \
+	rm -f longranger-2.1.3.tar.gz /longranger
 
 # Shell script for CMD to setup ENV
 RUN mkdir /opt/bin/ && \
