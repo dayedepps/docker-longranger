@@ -24,14 +24,17 @@ RUN cd /tmp/ && \
 	cd /tmp/ && \
 	rm -rf bcl2fastq/
 
+# LONG RANGER VERSION
+ENV LONGRANGER_VERSION 2.1.3
+
 # Install longranger
 RUN cd /tmp/ && \
-	git clone git://git/10x-genomics-longranger --branch v2.1.3 --single-branch longranger && \
+	git clone git://git/10x-genomics-longranger --branch "v${LONGRANGER_VERSION}" --single-branch longranger && \
 	cd longranger && \
-	cp longranger-2.1.3.tar.gz /opt/ && \
+	cp longranger-${LONGRANGER_VERSION}.tar.gz /opt/ && \
 	cd /opt/ && \
-	tar zxf longranger-2.1.3.tar.gz && \
-	rm -f longranger-2.1.3.tar.gz /longranger
+	tar zxf longranger-${LONGRANGER_VERSION}.tar.gz && \
+	rm -f longranger-${LONGRANGER_VERSION}.tar.gz /longranger
 
 # Shell script for CMD to setup ENV
 RUN mkdir /opt/bin/ && \
@@ -39,14 +42,11 @@ RUN mkdir /opt/bin/ && \
 	git clone https://github.com/genome/docker-longranger.git && \
 	cd docker-longranger && \
 	cp longranger /opt/bin && \
-	cp lsf.template /opt/longranger-2.1.3/martian-cs/2.1.2/jobmanagers && \
+	cp lsf.template /opt/longranger-${LONGRANGER_VERSION}/martian-cs/2.1.2/jobmanagers && \
 	rm -rf /tmp/docker-longranger
 RUN chmod 777 /opt/bin/longranger
-RUN chmod 777 /opt/longranger-2.1.3/martian-cs/2.1.2/jobmanagers
-RUN chmod 666 /opt/longranger-2.1.3/martian-cs/2.1.2/jobmanagers/*.template
-
-# LONG RANGER VERSION
-ENV LONGRANGER_VERSION 2.1.3
+RUN chmod 777 /opt/longranger-${LONGRANGER_VERSION}/martian-cs/2.1.2/jobmanagers
+RUN chmod 666 /opt/longranger-${LONGRANGER_VERSION}/martian-cs/2.1.2/jobmanagers/*.template
 
 # Entrypoint is the longranger wrapper scipt
 ENTRYPOINT ["/opt/bin/longranger"]
