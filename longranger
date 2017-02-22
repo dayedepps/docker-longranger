@@ -9,6 +9,9 @@ if [ -z "${LONGRANGER_VERSION}" ]; then
     exit
 fi
 
+# Reset PATH
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 # Source the longranger bash config
 . "/opt/longranger-${LONGRANGER_VERSION}"/sourceme.bash
 
@@ -30,3 +33,4 @@ if [[ "$1" == *"bash" ]]; then
 else
     longranger "$@"
 fi
+
