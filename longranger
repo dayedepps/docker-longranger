@@ -23,10 +23,5 @@ if [ ! -e "/etc/timezone" ] && [ -z "${TZ}" ]; then
     export TZ="America/Chicago"
 fi
 
-# Allow running a bash session, otherwise pass everything to longranger
-if [[ "$1" == *"bash" ]]; then
-    /bin/env bash
-else
-    longranger "$@"
-fi
-
+# Run command
+"$@"
