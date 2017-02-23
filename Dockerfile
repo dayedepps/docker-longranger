@@ -37,14 +37,14 @@ RUN cd /tmp/ && \
 	rm -f longranger-${LONGRANGER_VERSION}.tar.gz /longranger
 
 # Shell script for CMD to setup ENV
-RUN mkdir /opt/bin/ && \
-	cd /tmp/ && \
-	git clone https://github.com/genome/docker-longranger.git && \
-	cd docker-longranger && \
-	cp longranger /opt/bin && \
-	cp lsf.template /opt/longranger-${LONGRANGER_VERSION}/martian-cs/2.1.2/jobmanagers && \
-	rm -rf /tmp/docker-longranger
+RUN mkdir /opt/bin/
+
+# Copy longranger entry script
+COPY longranger /opt/bin/
 RUN chmod 777 /opt/bin/longranger
+
+# Copy martian lsf template
+COPY lsf.template /opt/longranger-${LONGRANGER_VERSION}/martian-cs/2.1.2/jobmanagers
 RUN chmod 777 /opt/longranger-${LONGRANGER_VERSION}/martian-cs/2.1.2/jobmanagers
 RUN chmod 666 /opt/longranger-${LONGRANGER_VERSION}/martian-cs/2.1.2/jobmanagers/*.template
 
