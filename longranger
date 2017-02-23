@@ -9,6 +9,12 @@ if [ -z "${LONGRANGER_VERSION}" ]; then
     exit
 fi
 
+# Reset PATH
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Add lsf bin to PATH
+export PATH=/opt/lsf9/9.1/linux2.6-glibc2.3-x86_64/bin:$PATH
+
 # Source the longranger bash config
 . "/opt/longranger-${LONGRANGER_VERSION}"/sourceme.bash
 
@@ -17,16 +23,5 @@ if [ ! -e "/etc/timezone" ] && [ -z "${TZ}" ]; then
     export TZ="America/Chicago"
 fi
 
-# If not, add longranger to path
-LONGRANGER_PATH="/opt/longranger-${LONGRANGER_VERSION}"
-if [[ ":${PATH}:" != *":${LONGRANGER_PATH}:"* ]]; then
-      PATH="${LONGRANGER_PATH}:${PATH}"
-        export PATH
-fi
-
-# Allow running a bash session, otherwise pass everything to longranger
-if [[ "$1" == *"bash" ]]; then
-    /bin/env bash
-else
-    longranger "$@"
-fi
+# Run command
+"$@"
